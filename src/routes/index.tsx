@@ -55,8 +55,10 @@ function Index() {
   }, []);
 
   const handleResgatar = () => {
-    setRevelado(true);
-    fireConfetti();
+    if (!revelado) {
+      setRevelado(true);
+      fireConfetti();
+    }
   };
 
   const handleCopy = async () => {
