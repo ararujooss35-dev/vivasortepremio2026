@@ -72,8 +72,8 @@ function Index() {
                 contemplado com essa premiação especial.
               </p>
               <p>
-                Clique em <strong className="text-foreground">"Resgatar prêmio"</strong> para continuar
-                e prosseguir com o resgate da sua premiação.
+                Clique em <strong className="text-foreground">"Resgatar prêmio"</strong> para
+                continuar e prosseguir com o resgate da sua premiação.
               </p>
               <p className="font-bold text-foreground">
                 Parabéns por essa conquista e aproveite seu prêmio.
