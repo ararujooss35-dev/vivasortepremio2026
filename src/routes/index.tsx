@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ClipboardCheck, CheckCircle2, Send, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePremio } from "@/lib/premio-store";
+import confetti from "canvas-confetti";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,9 +20,44 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function fireConfetti() {
+  const end = Date.now() + 1000;
+  const colors = ["#FFD700", "#ffffff", "#0f172a", "#f59e0b"];
+
+  (function frame() {
+    confetti({
+      particleCount: 4,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors,
+    });
+    confetti({
+      particleCount: 4,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+      colors,
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
 function Index() {
   const { nome, codigo, revelado, setRevelado } = usePremio();
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    fireConfetti();
+  }, []);
+
+  const handleResgatar = () => {
+    setRevelado(true);
+    fireConfetti();
+  };
 
   const handleCopy = async () => {
     try {
@@ -80,7 +116,7 @@ function Index() {
             </div>
 
             <Button
-              onClick={() => setRevelado(true)}
+              onClick={handleResgatar}
               className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
             >
               Resgatar prêmio
