@@ -21,9 +21,9 @@ function readBool(key: string, fallback: boolean) {
 }
 
 export function usePremio() {
-  const [nome, setNomeState] = useState(DEFAULT_NOME);
-  const [codigo, setCodigoState] = useState(DEFAULT_CODIGO);
-  const [revelado, setReveladoState] = useState(false);
+  const [nome, setNomeState] = useState(() => read(NOME_KEY, DEFAULT_NOME));
+  const [codigo, setCodigoState] = useState(() => read(CODIGO_KEY, DEFAULT_CODIGO));
+  const [revelado, setReveladoState] = useState(() => readBool(REVELADO_KEY, false));
 
   useEffect(() => {
     const sync = () => {
