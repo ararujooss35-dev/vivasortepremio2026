@@ -115,9 +115,24 @@ function Index() {
           <h2 className="text-center text-xl font-bold text-[var(--brand-navy)]">Como funciona</h2>
           <div className="mt-6 grid grid-cols-3 gap-4">
             {[
-              { icon: ClipboardCheck, step: "Etapa 1", title: "Confirme seus dados", desc: "Verifique suas informações pessoais" },
-              { icon: CheckCircle2, step: "Etapa 2", title: "Sistema validado", desc: "Validação automática do sistema" },
-              { icon: Send, step: "Etapa 3", title: "Receba instruções", desc: "Orientações enviadas por e-mail" },
+              {
+                icon: ClipboardCheck,
+                step: "Etapa 1",
+                title: "Confirme seus dados",
+                desc: "Verifique suas informações pessoais",
+              },
+              {
+                icon: CheckCircle2,
+                step: "Etapa 2",
+                title: "Sistema validado",
+                desc: "Validação automática do sistema",
+              },
+              {
+                icon: Send,
+                step: "Etapa 3",
+                title: "Receba instruções",
+                desc: "Orientações enviadas por e-mail",
+              },
             ].map((s) => (
               <div key={s.step} className="text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-navy)] text-primary-foreground">
@@ -131,7 +146,6 @@ function Index() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
