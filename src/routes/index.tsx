@@ -2,13 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ClipboardCheck, CheckCircle2, Send, Copy, Check } from "lucide-react";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { usePremio } from "@/lib/premio-store";
 
 export const Route = createFileRoute("/")({
@@ -25,7 +18,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { nome, codigo } = usePremio();
-  const [open, setOpen] = useState(false);
+  const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -78,11 +71,29 @@ function Index() {
             </div>
 
             <Button
-              onClick={() => setOpen(true)}
+              onClick={() => setShowCode(true)}
               className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
             >
               Resgatar prêmio
             </Button>
+            {showCode && (
+              <div className="mt-6 text-center">
+                <p className="text-sm font-bold text-muted-foreground">Seu código de resgate:</p>
+                <div className="mt-3 rounded-xl bg-[var(--brand-navy)] px-5 py-5 text-left">
+                  <p className="break-all font-mono text-sm font-extrabold leading-7 text-primary-foreground">
+                    {codigo}
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={handleCopy}
+                  className="mt-3 h-11 w-full gap-2 rounded-lg border-border bg-background font-bold text-foreground hover:bg-muted"
+                >
+                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? "Código copiado" : "Copiar código"}
+                </Button>
+              </div>
+            )}
             <p className="mt-3 text-xs text-muted-foreground">
               Confirmação sujeita à validação de dados.
             </p>
@@ -111,28 +122,6 @@ function Index() {
         </div>
       </div>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-[var(--brand-navy)]">
-              Código PIX para resgate
-            </DialogTitle>
-            <DialogDescription>
-              Copie o código abaixo e cole no app do seu banco para receber o prêmio.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="rounded-lg border bg-muted p-4">
-            <p className="break-all font-mono text-xs text-foreground">{codigo}</p>
-          </div>
-          <Button
-            onClick={handleCopy}
-            className="h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
-          >
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {copied ? "Copiado!" : "Copiar código PIX"}
-          </Button>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
