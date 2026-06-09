@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Settings, User, Save, RotateCw } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePremio } from "@/lib/premio-store";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
@@ -20,8 +20,16 @@ export const Route = createFileRoute("/admin")({
 
 function Admin() {
   const { nome, codigo, setNome, setCodigo } = usePremio();
-  const [nomeInput, setNomeInput] = useState("");
-  const [codigoInput, setCodigoInput] = useState("");
+  const [nomeInput, setNomeInput] = useState(nome);
+  const [codigoInput, setCodigoInput] = useState(codigo);
+
+  useEffect(() => {
+    setNomeInput(nome);
+  }, [nome]);
+
+  useEffect(() => {
+    setCodigoInput(codigo);
+  }, [codigo]);
 
   const salvarNome = () => {
     const v = nomeInput.trim();
@@ -30,7 +38,6 @@ function Admin() {
       return;
     }
     setNome(v);
-    setNomeInput("");
     toast.success("Nome atualizado");
   };
 
@@ -41,7 +48,6 @@ function Admin() {
       return;
     }
     setCodigo(v);
-    setCodigoInput("");
     toast.success("Código atualizado");
   };
 
