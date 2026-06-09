@@ -6,6 +6,7 @@ import { usePremio } from "@/lib/premio-store";
 import confetti from "canvas-confetti";
 
 export const Route = createFileRoute("/")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Premiação Viva Sorte — Resgate seu prêmio" },
@@ -47,7 +48,7 @@ function fireConfetti() {
 }
 
 function Index() {
-  const { nome, codigo, revelado, setRevelado } = usePremio();
+  const { nome, codigo, revelado, isReady, setRevelado } = usePremio();
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -70,6 +71,10 @@ function Index() {
       /* ignore */
     }
   };
+
+  if (!isReady) {
+    return <div className="min-h-screen bg-background" />;
+  }
 
   return (
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">

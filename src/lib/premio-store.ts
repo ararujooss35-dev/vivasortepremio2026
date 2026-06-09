@@ -24,12 +24,14 @@ export function usePremio() {
   const [nome, setNomeState] = useState(DEFAULT_NOME);
   const [codigo, setCodigoState] = useState(DEFAULT_CODIGO);
   const [revelado, setReveladoState] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const sync = () => {
       setNomeState(read(NOME_KEY, DEFAULT_NOME));
       setCodigoState(read(CODIGO_KEY, DEFAULT_CODIGO));
       setReveladoState(readBool(REVELADO_KEY, false));
+      setIsReady(true);
     };
     sync();
     const onStorage = (e: StorageEvent) => {
@@ -59,5 +61,5 @@ export function usePremio() {
     window.dispatchEvent(new Event(PREMIO_EVENT));
   };
 
-  return { nome, codigo, revelado, setNome, setCodigo, setRevelado };
+  return { nome, codigo, revelado, isReady, setNome, setCodigo, setRevelado };
 }
