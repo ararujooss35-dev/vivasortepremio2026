@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Settings, User, Save, RotateCw } from "lucide-react";
+import { Settings, User, Save, RotateCw, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePremio } from "@/lib/premio-store";
 import { toast } from "sonner";
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function Admin() {
-  const { nome, codigo, setNome, setCodigo } = usePremio();
+  const { nome, codigo, revelado, setNome, setCodigo, setRevelado } = usePremio();
   const [nomeInput, setNomeInput] = useState(nome);
   const [codigoInput, setCodigoInput] = useState(codigo);
 
@@ -124,6 +124,23 @@ function Admin() {
             </Button>
           </div>
         </div>
+
+        {/* Resetar visualização */}
+        {revelado && (
+          <>
+            <hr className="my-7 border-border" />
+            <Button
+              variant="outline"
+              onClick={() => {
+                setRevelado(false);
+                toast.success("Visualização resetada");
+              }}
+              className="h-11 w-full gap-2 font-bold"
+            >
+              <EyeOff className="h-4 w-4" /> Esconder código no site
+            </Button>
+          </>
+        )}
       </div>
       <Toaster />
     </div>
