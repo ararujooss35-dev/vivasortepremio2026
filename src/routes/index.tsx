@@ -8,7 +8,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Premiação Viva Sorte — Resgate seu prêmio" },
-      { name: "description", content: "Parabéns! Você foi sorteado. Resgate seu prêmio Viva Sorte agora mesmo." },
+      {
+        name: "description",
+        content: "Parabéns! Você foi sorteado. Resgate seu prêmio Viva Sorte agora mesmo.",
+      },
       { property: "og:title", content: "Premiação Viva Sorte" },
       { property: "og:description", content: "Parabéns, resgate seu prêmio!" },
     ],
@@ -35,10 +38,15 @@ function Index() {
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
       <div className="mx-auto w-full max-w-md">
         {/* Main Card */}
-        <div className="overflow-hidden rounded-2xl bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
+        <div
+          className="overflow-hidden rounded-2xl bg-card"
+          style={{ boxShadow: "var(--shadow-card)" }}
+        >
           {/* Navy header */}
           <div className="bg-[var(--brand-navy)] px-6 py-8 text-center text-primary-foreground">
-            <div className="text-5xl" aria-hidden>🎉</div>
+            <div className="text-5xl" aria-hidden>
+              🎉
+            </div>
             <h1 className="mt-2 text-3xl font-extrabold">🎉 Parabéns!</h1>
           </div>
 
@@ -60,10 +68,12 @@ function Index() {
                 <strong className="text-[var(--brand-navy)]">Viva Sorte/Cartão de Todos</strong>.
               </p>
               <p>
-                Sua participação foi essencial e é com enorme satisfação que anunciamos que você foi contemplado com essa premiação especial.
+                Sua participação foi essencial e é com enorme satisfação que anunciamos que você foi
+                contemplado com essa premiação especial.
               </p>
               <p>
-                Clique em <strong className="text-foreground">"Resgatar prêmio"</strong> para continuar e prosseguir com o resgate da sua premiação.
+                Clique em <strong className="text-foreground">"Resgatar prêmio"</strong> para continuar
+                e prosseguir com o resgate da sua premiação.
               </p>
               <p className="font-bold text-foreground">
                 Parabéns por essa conquista e aproveite seu prêmio.
