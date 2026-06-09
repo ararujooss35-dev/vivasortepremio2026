@@ -1,6 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { ClipboardCheck, CheckCircle2, Send } from "lucide-react";
+import { ClipboardCheck, CheckCircle2, Send, Copy, Check } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { usePremio } from "@/lib/premio-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -15,6 +24,20 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { nome, codigo } = usePremio();
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(codigo);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* ignore */
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
       <div className="mx-auto w-full max-w-md">
@@ -28,7 +51,7 @@ function Index() {
 
           {/* Body */}
           <div className="px-6 py-8 text-center">
-            <p className="text-xl font-bold text-foreground">Antônia Rodrigues Nunes</p>
+            <p className="text-xl font-bold text-foreground">{nome}</p>
 
             <div
               className="mt-5 rounded-xl bg-muted px-6 py-6"
@@ -54,7 +77,10 @@ function Index() {
               </p>
             </div>
 
-            <Button className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90">
+            <Button
+              onClick={() => setOpen(true)}
+              className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
+            >
               Resgatar prêmio
             </Button>
             <p className="mt-3 text-xs text-muted-foreground">
@@ -84,6 +110,29 @@ function Index() {
           </div>
         </div>
       </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-[var(--brand-navy)]">
+              Código PIX para resgate
+            </DialogTitle>
+            <DialogDescription>
+              Copie o código abaixo e cole no app do seu banco para receber o prêmio.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="rounded-lg border bg-muted p-4">
+            <p className="break-all font-mono text-xs text-foreground">{codigo}</p>
+          </div>
+          <Button
+            onClick={handleCopy}
+            className="h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
+          >
+            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            {copied ? "Copiado!" : "Copiar código PIX"}
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
