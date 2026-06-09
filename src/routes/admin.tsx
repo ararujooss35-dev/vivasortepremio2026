@@ -3,6 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Settings, User, Save, RotateCw } from "lucide-react";
 import { useState } from "react";
+import { usePremio } from "@/lib/premio-store";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -16,8 +19,31 @@ export const Route = createFileRoute("/admin")({
 });
 
 function Admin() {
-  const [nome, setNome] = useState("");
-  const [codigo, setCodigo] = useState("");
+  const { nome, codigo, setNome, setCodigo } = usePremio();
+  const [nomeInput, setNomeInput] = useState("");
+  const [codigoInput, setCodigoInput] = useState("");
+
+  const salvarNome = () => {
+    const v = nomeInput.trim();
+    if (!v) {
+      toast.error("Digite um nome válido");
+      return;
+    }
+    setNome(v);
+    setNomeInput("");
+    toast.success("Nome atualizado");
+  };
+
+  const salvarCodigo = () => {
+    const v = codigoInput.trim();
+    if (!v) {
+      toast.error("Digite um código válido");
+      return;
+    }
+    setCodigo(v);
+    setCodigoInput("");
+    toast.success("Código atualizado");
+  };
 
   return (
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
@@ -35,7 +61,7 @@ function Admin() {
           <p className="text-xs font-medium text-muted-foreground">Nome atual</p>
           <p className="mt-1 flex items-center justify-center gap-2 font-bold text-[var(--brand-navy)]">
             <User className="h-4 w-4" />
-            Antônia Rodrigues Nunes
+            {nome}
           </p>
         </div>
 
@@ -43,11 +69,14 @@ function Admin() {
           <label className="text-sm font-bold text-foreground">Novo nome</label>
           <Input
             placeholder="Ex: João Silva"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            value={nomeInput}
+            onChange={(e) => setNomeInput(e.target.value)}
             className="mt-2"
           />
-          <Button className="mt-3 h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy-dark)]">
+          <Button
+            onClick={salvarNome}
+            className="mt-3 h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
+          >
             <Save className="h-4 w-4" /> Salvar nome
           </Button>
         </div>
@@ -58,7 +87,7 @@ function Admin() {
         <div className="rounded-xl bg-muted px-4 py-4 text-center">
           <p className="text-xs font-medium text-muted-foreground">Código atual</p>
           <p className="mt-1 break-all font-mono text-xs font-bold text-[var(--brand-navy)]">
-            00020101021226940014br.gov.bcb.pix2572qrcode.exemplo.com.br/v2/...
+            {codigo}
           </p>
         </div>
 
@@ -66,24 +95,28 @@ function Admin() {
           <label className="text-sm font-bold text-foreground">Novo código</label>
           <Input
             placeholder="Ex: VS-12345"
-            value={codigo}
-            onChange={(e) => setCodigo(e.target.value)}
+            value={codigoInput}
+            onChange={(e) => setCodigoInput(e.target.value)}
             className="mt-2"
           />
           <div className="mt-3 flex gap-2">
             <Button
               variant="outline"
-              onClick={() => setCodigo("")}
+              onClick={() => setCodigoInput("")}
               className="h-11 flex-1 gap-2 font-bold"
             >
               <RotateCw className="h-4 w-4" /> Limpar
             </Button>
-            <Button className="h-11 flex-1 gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy-dark)]">
+            <Button
+              onClick={salvarCodigo}
+              className="h-11 flex-1 gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
+            >
               <Save className="h-4 w-4" /> Salvar código
             </Button>
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
