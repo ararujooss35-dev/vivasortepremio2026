@@ -6,6 +6,7 @@ import { usePremio } from "@/lib/premio-store";
 import confetti from "canvas-confetti";
 
 export const Route = createFileRoute("/")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Premiação Viva Sorte — Resgate seu prêmio" },
