@@ -116,7 +116,7 @@ function Index() {
             </div>
 
             <Button
-              onClick={() => setRevelado(true)}
+              onClick={handleResgatar}
               className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
             >
               Resgatar prêmio
