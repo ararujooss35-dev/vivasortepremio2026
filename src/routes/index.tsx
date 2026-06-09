@@ -20,9 +20,44 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function fireConfetti() {
+  const end = Date.now() + 1000;
+  const colors = ["#FFD700", "#ffffff", "#0f172a", "#f59e0b"];
+
+  (function frame() {
+    confetti({
+      particleCount: 4,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors,
+    });
+    confetti({
+      particleCount: 4,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+      colors,
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
 function Index() {
   const { nome, codigo, revelado, setRevelado } = usePremio();
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    fireConfetti();
+  }, []);
+
+  const handleResgatar = () => {
+    setRevelado(true);
+    fireConfetti();
+  };
 
   const handleCopy = async () => {
     try {
