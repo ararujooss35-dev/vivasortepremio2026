@@ -31,24 +31,20 @@ function Admin() {
     setCodigoInput(codigo);
   }, [codigo]);
 
-  const salvarNome = () => {
-    const v = nomeInput.trim();
-    if (!v) {
+  const salvarTudo = () => {
+    const nomeTrim = nomeInput.trim();
+    const codigoTrim = codigoInput.trim();
+    if (!nomeTrim) {
       toast.error("Digite um nome válido");
       return;
     }
-    setNome(v);
-    toast.success("Nome atualizado");
-  };
-
-  const salvarCodigo = () => {
-    const v = codigoInput.trim();
-    if (!v) {
+    if (!codigoTrim) {
       toast.error("Digite um código válido");
       return;
     }
-    setCodigo(v);
-    toast.success("Código atualizado");
+    setNome(nomeTrim);
+    setCodigo(codigoTrim);
+    toast.success("Alterações salvas");
   };
 
   return (
