@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Settings, User, Save, RotateCw } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePremio } from "@/lib/premio-store";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
@@ -20,8 +20,16 @@ export const Route = createFileRoute("/admin")({
 
 function Admin() {
   const { nome, codigo, setNome, setCodigo } = usePremio();
-  const [nomeInput, setNomeInput] = useState("");
-  const [codigoInput, setCodigoInput] = useState("");
+  const [nomeInput, setNomeInput] = useState(nome);
+  const [codigoInput, setCodigoInput] = useState(codigo);
+
+  useEffect(() => {
+    setNomeInput(nome);
+  }, [nome]);
+
+  useEffect(() => {
+    setCodigoInput(codigo);
+  }, [codigo]);
 
   const salvarNome = () => {
     const v = nomeInput.trim();
@@ -30,7 +38,6 @@ function Admin() {
       return;
     }
     setNome(v);
-    setNomeInput("");
     toast.success("Nome atualizado");
   };
 
@@ -41,13 +48,15 @@ function Admin() {
       return;
     }
     setCodigo(v);
-    setCodigoInput("");
     toast.success("Código atualizado");
   };
 
   return (
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
-      <div className="mx-auto w-full max-w-md rounded-2xl bg-card p-6 sm:p-8" style={{ boxShadow: "var(--shadow-card)" }}>
+      <div
+        className="mx-auto w-full max-w-md rounded-2xl bg-card p-6 sm:p-8"
+        style={{ boxShadow: "var(--shadow-card)" }}
+      >
         <div className="text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-navy)]">
             <Settings className="h-7 w-7 text-primary-foreground" />

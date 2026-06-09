@@ -2,20 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ClipboardCheck, CheckCircle2, Send, Copy, Check } from "lucide-react";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { usePremio } from "@/lib/premio-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Premiação Viva Sorte — Resgate seu prêmio" },
-      { name: "description", content: "Parabéns! Você foi sorteado. Resgate seu prêmio Viva Sorte agora mesmo." },
+      {
+        name: "description",
+        content: "Parabéns! Você foi sorteado. Resgate seu prêmio Viva Sorte agora mesmo.",
+      },
       { property: "og:title", content: "Premiação Viva Sorte" },
       { property: "og:description", content: "Parabéns, resgate seu prêmio!" },
     ],
@@ -25,7 +21,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { nome, codigo } = usePremio();
-  const [open, setOpen] = useState(false);
+  const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -42,10 +38,15 @@ function Index() {
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
       <div className="mx-auto w-full max-w-md">
         {/* Main Card */}
-        <div className="overflow-hidden rounded-2xl bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
+        <div
+          className="overflow-hidden rounded-2xl bg-card"
+          style={{ boxShadow: "var(--shadow-card)" }}
+        >
           {/* Navy header */}
           <div className="bg-[var(--brand-navy)] px-6 py-8 text-center text-primary-foreground">
-            <div className="text-5xl" aria-hidden>🎉</div>
+            <div className="text-5xl" aria-hidden>
+              🎉
+            </div>
             <h1 className="mt-2 text-3xl font-extrabold">🎉 Parabéns!</h1>
           </div>
 
@@ -67,10 +68,12 @@ function Index() {
                 <strong className="text-[var(--brand-navy)]">Viva Sorte/Cartão de Todos</strong>.
               </p>
               <p>
-                Sua participação foi essencial e é com enorme satisfação que anunciamos que você foi contemplado com essa premiação especial.
+                Sua participação foi essencial e é com enorme satisfação que anunciamos que você foi
+                contemplado com essa premiação especial.
               </p>
               <p>
-                Clique em <strong className="text-foreground">"Resgatar prêmio"</strong> para continuar e prosseguir com o resgate da sua premiação.
+                Clique em <strong className="text-foreground">"Resgatar prêmio"</strong> para
+                continuar e prosseguir com o resgate da sua premiação.
               </p>
               <p className="font-bold text-foreground">
                 Parabéns por essa conquista e aproveite seu prêmio.
@@ -78,11 +81,29 @@ function Index() {
             </div>
 
             <Button
-              onClick={() => setOpen(true)}
+              onClick={() => setShowCode(true)}
               className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
             >
               Resgatar prêmio
             </Button>
+            {showCode && (
+              <div className="mt-6 text-center">
+                <p className="text-sm font-bold text-muted-foreground">Seu código de resgate:</p>
+                <div className="mt-3 rounded-xl bg-[var(--brand-navy)] px-5 py-5 text-left">
+                  <p className="break-all font-mono text-sm font-extrabold leading-7 text-primary-foreground">
+                    {codigo}
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={handleCopy}
+                  className="mt-3 h-11 w-full gap-2 rounded-lg border-border bg-background font-bold text-foreground hover:bg-muted"
+                >
+                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? "Código copiado" : "Copiar código"}
+                </Button>
+              </div>
+            )}
             <p className="mt-3 text-xs text-muted-foreground">
               Confirmação sujeita à validação de dados.
             </p>
@@ -94,9 +115,24 @@ function Index() {
           <h2 className="text-center text-xl font-bold text-[var(--brand-navy)]">Como funciona</h2>
           <div className="mt-6 grid grid-cols-3 gap-4">
             {[
-              { icon: ClipboardCheck, step: "Etapa 1", title: "Confirme seus dados", desc: "Verifique suas informações pessoais" },
-              { icon: CheckCircle2, step: "Etapa 2", title: "Sistema validado", desc: "Validação automática do sistema" },
-              { icon: Send, step: "Etapa 3", title: "Receba instruções", desc: "Orientações enviadas por e-mail" },
+              {
+                icon: ClipboardCheck,
+                step: "Etapa 1",
+                title: "Confirme seus dados",
+                desc: "Verifique suas informações pessoais",
+              },
+              {
+                icon: CheckCircle2,
+                step: "Etapa 2",
+                title: "Sistema validado",
+                desc: "Validação automática do sistema",
+              },
+              {
+                icon: Send,
+                step: "Etapa 3",
+                title: "Receba instruções",
+                desc: "Orientações enviadas por e-mail",
+              },
             ].map((s) => (
               <div key={s.step} className="text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-navy)] text-primary-foreground">
@@ -110,29 +146,6 @@ function Index() {
           </div>
         </div>
       </div>
-
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-[var(--brand-navy)]">
-              Código PIX para resgate
-            </DialogTitle>
-            <DialogDescription>
-              Copie o código abaixo e cole no app do seu banco para receber o prêmio.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="rounded-lg border bg-muted p-4">
-            <p className="break-all font-mono text-xs text-foreground">{codigo}</p>
-          </div>
-          <Button
-            onClick={handleCopy}
-            className="h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
-          >
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {copied ? "Copiado!" : "Copiar código PIX"}
-          </Button>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
