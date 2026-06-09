@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ClipboardCheck, CheckCircle2, Send, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePremio } from "@/lib/premio-store";
+import confetti from "canvas-confetti";
 
 export const Route = createFileRoute("/")({
   head: () => ({
