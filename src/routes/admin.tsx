@@ -19,7 +19,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function Admin() {
-  const { nome, codigo, revelado, setNome, setCodigo, setRevelado } = usePremio();
+  const { nome, codigo, revelado, isReady, setNome, setCodigo, setRevelado } = usePremio();
   const [nomeInput, setNomeInput] = useState(nome);
   const [codigoInput, setCodigoInput] = useState(codigo);
 
@@ -46,6 +46,10 @@ function Admin() {
     setCodigo(codigoTrim);
     toast.success("Alterações salvas");
   };
+
+  if (!isReady) {
+    return <div className="min-h-screen bg-background" />;
+  }
 
   return (
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
