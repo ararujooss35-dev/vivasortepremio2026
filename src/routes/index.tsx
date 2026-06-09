@@ -117,13 +117,14 @@ function Index() {
               </p>
             </div>
 
-            <Button
-              onClick={handleResgatar}
-              className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
-            >
-              Resgatar prêmio
-            </Button>
-            {revelado && (
+            {!revelado ? (
+              <Button
+                onClick={handleResgatar}
+                className="mt-6 h-12 w-full bg-[var(--brand-yellow)] text-base font-bold text-[var(--brand-navy)] hover:bg-[var(--brand-yellow)]/90"
+              >
+                Resgatar prêmio
+              </Button>
+            ) : (
               <div className="mt-6 text-center">
                 <p className="text-sm font-bold text-muted-foreground">Seu código de resgate:</p>
                 <div className="mt-3 rounded-xl bg-[var(--brand-navy)] px-5 py-5 text-left">
