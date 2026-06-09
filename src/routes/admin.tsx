@@ -78,12 +78,6 @@ function Admin() {
             onChange={(e) => setNomeInput(e.target.value)}
             className="mt-2"
           />
-          <Button
-            onClick={salvarNome}
-            className="mt-3 h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
-          >
-            <Save className="h-4 w-4" /> Salvar nome
-          </Button>
         </div>
 
         <hr className="my-7 border-border" />
@@ -107,16 +101,19 @@ function Admin() {
           <div className="mt-3 flex gap-2">
             <Button
               variant="outline"
-              onClick={() => setCodigoInput("")}
+              onClick={() => {
+                setNomeInput(nome);
+                setCodigoInput(codigo);
+              }}
               className="h-11 flex-1 gap-2 font-bold"
             >
-              <RotateCw className="h-4 w-4" /> Limpar
+              <RotateCw className="h-4 w-4" /> Restaurar
             </Button>
             <Button
-              onClick={salvarCodigo}
+              onClick={salvarTudo}
               className="h-11 flex-1 gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
             >
-              <Save className="h-4 w-4" /> Salvar código
+              <Save className="h-4 w-4" /> Salvar
             </Button>
           </div>
         </div>
