@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Premiação Viva Sorte" },
+      { name: "description", content: "Parabéns, Resgate seu premio!" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Premiação Viva Sorte" },
+      { property: "og:description", content: "Parabéns, Resgate seu premio!" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Premiação Viva Sorte" },
+      { name: "twitter:description", content: "Parabéns, Resgate seu premio!" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/sGhahJSK1ua1r4NrW3Ovhr4OAHk2/social-images/social-1780967584350-download.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/sGhahJSK1ua1r4NrW3Ovhr4OAHk2/social-images/social-1780967584350-download.webp" },
     ],
     links: [
       {
