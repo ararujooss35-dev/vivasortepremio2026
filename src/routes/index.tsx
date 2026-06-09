@@ -89,7 +89,7 @@ function Index() {
             <div className="text-5xl" aria-hidden>
               🎉
             </div>
-            <h1 className="mt-2 text-3xl font-extrabold">🎉 Parabéns!</h1>
+            <h1 className="mt-2 text-3xl font-extrabold">Parabéns!</h1>
           </div>
 
           {/* Body */}
