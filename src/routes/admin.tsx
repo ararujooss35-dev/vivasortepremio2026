@@ -53,7 +53,10 @@ function Admin() {
 
   return (
     <div className="min-h-screen bg-background py-8 px-4 sm:py-12">
-      <div className="mx-auto w-full max-w-md rounded-2xl bg-card p-6 sm:p-8" style={{ boxShadow: "var(--shadow-card)" }}>
+      <div
+        className="mx-auto w-full max-w-md rounded-2xl bg-card p-6 sm:p-8"
+        style={{ boxShadow: "var(--shadow-card)" }}
+      >
         <div className="text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-navy)]">
             <Settings className="h-7 w-7 text-primary-foreground" />
