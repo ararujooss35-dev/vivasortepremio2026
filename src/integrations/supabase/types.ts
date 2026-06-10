@@ -14,7 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      premio_config: {
+        Row: {
+          codigo: string
+          id: boolean
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          codigo?: string
+          id?: boolean
+          nome?: string
+          updated_at?: string
+        }
+        Update: {
+          codigo?: string
+          id?: boolean
+          nome?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
