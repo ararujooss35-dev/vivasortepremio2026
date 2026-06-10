@@ -32,20 +32,32 @@ function Admin() {
     setCodigoInput(codigo);
   }, [codigo]);
 
-  const salvarTudo = () => {
+  const salvarNome = async () => {
     const nomeTrim = nomeInput.trim();
-    const codigoTrim = codigoInput.trim();
     if (!nomeTrim) {
       toast.error("Digite um nome válido");
       return;
     }
+    try {
+      await setNome(nomeTrim);
+      toast.success("Nome salvo");
+    } catch {
+      toast.error("Não foi possível salvar o nome");
+    }
+  };
+
+  const salvarCodigo = async () => {
+    const codigoTrim = codigoInput.trim();
     if (!codigoTrim) {
       toast.error("Digite um código válido");
       return;
     }
-    setNome(nomeTrim);
-    setCodigo(codigoTrim);
-    toast.success("Alterações salvas");
+    try {
+      await setCodigo(codigoTrim);
+      toast.success("Código salvo");
+    } catch {
+      toast.error("Não foi possível salvar o código");
+    }
   };
 
   if (!isReady) {
@@ -83,6 +95,12 @@ function Admin() {
             onChange={(e) => setNomeInput(e.target.value)}
             className="mt-2"
           />
+          <Button
+            onClick={salvarNome}
+            className="mt-3 h-11 w-full gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
+          >
+            <Save className="h-4 w-4" /> Salvar nome
+          </Button>
         </div>
 
         <hr className="my-7 border-border" />
@@ -115,10 +133,10 @@ function Admin() {
               <RotateCw className="h-4 w-4" /> Restaurar
             </Button>
             <Button
-              onClick={salvarTudo}
+              onClick={salvarCodigo}
               className="h-11 flex-1 gap-2 bg-[var(--brand-navy)] font-bold text-primary-foreground hover:bg-[var(--brand-navy)]/90"
             >
-              <Save className="h-4 w-4" /> Salvar
+              <Save className="h-4 w-4" /> Salvar código
             </Button>
           </div>
         </div>
