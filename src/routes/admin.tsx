@@ -1,13 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Settings, User, Save, RotateCw, EyeOff, LogOut } from "lucide-react";
+import { Settings, User, Save, RotateCw, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePremio } from "@/lib/premio-store";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -25,22 +23,6 @@ function Admin() {
   const { nome, codigo, revelado, isReady, setNome, setCodigo, setRevelado } = usePremio();
   const [nomeInput, setNomeInput] = useState(nome);
   const [codigoInput, setCodigoInput] = useState(codigo);
-  const [authChecked, setAuthChecked] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    void supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) {
-        navigate({ to: "/admin/login" });
-      } else {
-        setAuthChecked(true);
-      }
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (!session) navigate({ to: "/admin/login" });
-    });
-    return () => sub.subscription.unsubscribe();
-  }, [navigate]);
 
   useEffect(() => {
     setNomeInput(nome);
@@ -78,12 +60,7 @@ function Admin() {
     }
   };
 
-  const sair = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/admin/login" });
-  };
-
-  if (!authChecked || !isReady) {
+  if (!isReady) {
     return <div className="min-h-screen bg-background" />;
   }
 
@@ -181,14 +158,6 @@ function Admin() {
           </>
         )}
 
-        <hr className="my-7 border-border" />
-        <Button
-          variant="ghost"
-          onClick={sair}
-          className="h-11 w-full gap-2 font-bold text-muted-foreground"
-        >
-          <LogOut className="h-4 w-4" /> Sair
-        </Button>
       </div>
       <Toaster />
     </div>
